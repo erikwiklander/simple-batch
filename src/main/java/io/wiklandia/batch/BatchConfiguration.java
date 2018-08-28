@@ -3,7 +3,9 @@ package io.wiklandia.batch;
 import java.beans.PropertyEditorSupport;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -51,6 +53,9 @@ public class BatchConfiguration {
 		@Override
 		public Trailer mapLine(String line, int lineNumber) throws Exception {
 
+			List<String> tezt = new ArrayList<>();
+			tezt.stream().toArray(String[]::new);
+
 			FixedLengthTokenizer tokenizer = new FixedLengthTokenizer();
 			tokenizer.setNames("name", "age", "yearOfBirth");
 			tokenizer.setColumns(new Range(1, 7), new Range(8, 9), new Range(10, 18));
@@ -59,7 +64,6 @@ public class BatchConfiguration {
 
 			TrailerFieldSetMapper mapper = new TrailerFieldSetMapper();
 
-			mapper.setTargetType(Trailer.class);
 			return mapper.mapFieldSet(tokenizer.tokenize(line));
 
 		}
@@ -67,6 +71,10 @@ public class BatchConfiguration {
 	}
 
 	public static class TrailerFieldSetMapper extends BeanWrapperFieldSetMapper<Trailer> {
+
+		public TrailerFieldSetMapper() {
+			this.setTargetType(Trailer.class);
+		}
 
 		@Override
 		public void registerCustomEditors(PropertyEditorRegistry registry) {
