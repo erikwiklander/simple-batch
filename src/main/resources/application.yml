@@ -5,4 +5,7 @@ mapping:
       awesome: 100,1000
     APOLLO:
       no: 1,1
-      lkkjlkjlsad: 190,190
+      lkkjlkjlsad: 190,190          # hej!
+spring:
+  jpa:
+    show-sql: true
